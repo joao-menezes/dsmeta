@@ -18,8 +18,6 @@ const [sales, setSales] = useState<Sale[]>([]);
     useEffect(() => {
         const dMin = minDate .toISOString().split('T')[0];
         const dMax = maxDate .toISOString().split('T')[0];
-
-        console.log(dMin);
         
         axios.get(`${BASE_URL}/sales?minDate=${dMin}&maxDate=${dMax}`)
             .then(res => {
@@ -74,7 +72,7 @@ const [sales, setSales] = useState<Sale[]>([]);
                             <td>R$ {sale.amount.toFixed(2)}</td>
                             <td>
                                 <div className="dsmeta-red-btn-container">
-                                    <NotificationButton />
+                                    <NotificationButton saleId={sale.id}/>
                                 </div>
                             </td>
                         </tr>
