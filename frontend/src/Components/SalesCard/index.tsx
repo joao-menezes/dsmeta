@@ -10,16 +10,22 @@ import { Sale } from '../../models/sale';
 function SalesCard(){
 
 const min = new Date(new Date().setDate(new Date().getDate() - 365));
+
 const [minDate, setMinDate] = useState(min);
 const [maxDate, setMaxDate] = useState(new Date());
 const [sales, setSales] = useState<Sale[]>([]);
 
     useEffect(() => {
-    axios.get(`${BASE_URL}/sales`)
-    .then(res => {
-    setSales(res.data.content);
-    })
-    },[])
+        const dMin = minDate .toISOString().split('T')[0];
+        const dMax = maxDate .toISOString().split('T')[0];
+
+        console.log(dMin);
+        
+        axios.get(`${BASE_URL}/sales?minDate=${dMin}&maxDate=${dMax}`)
+            .then(res => {
+                setSales(res.data.content);
+        })
+    },[minDate, maxDate]);
 
     return(
     <>
